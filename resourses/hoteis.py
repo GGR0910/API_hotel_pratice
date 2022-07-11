@@ -1,31 +1,5 @@
 from flask_restful import Resource, reqparse
-
 import DAO
-
-hotels = [{
-
-    'hotelid': 'alpha',
-    'hotelnome': 'alphahotel',
-    'diaria': 100,
-    'estrelas': 4
-
-}, {
-    'hotelid': 'beta',
-    'hotelnome': 'betahotel',
-    'diaria': 100,
-    'estrelas': 5
-}, {
-    'hotelid': 'omega',
-    'hotelnome': 'omegahotel',
-    'diaria': 100,
-    'estrelas': 3
-}]
-
-
-class hoteis(Resource):
-    def get(self):
-        return {"hoteis": hotels}
-
 
 argumentos = reqparse.RequestParser()
 argumentos.add_argument('hotelid', default=0)
