@@ -51,6 +51,13 @@ def ler_user(user_id):
         }
         return Json
 
+def ler_login(user_login):
+    cursor.execute(f'select user_login, user_pass from API.APIHotelusers where user_login = "{user_login}"')
+    usuario= cursor.fetchall()
+    if usuario:
+        lista= [usuario[0][0],usuario[0][1]]
+        return lista
+    return False
 
 def deletar_user(user_id):
     cursor.execute(f'delete from API.APIHotelusers where user_id = {user_id}')

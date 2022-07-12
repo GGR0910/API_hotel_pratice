@@ -1,9 +1,9 @@
 from flask_restful import Resource, reqparse
 import DAO
+from flask_jwt_extended import jwt_required
 
 argumentos = reqparse.RequestParser()
 argumentos.add_argument('hotelid', default=0)
-
 
 class hotel(Resource):
 
@@ -20,6 +20,7 @@ class hotel(Resource):
             return hotel
         return {"Mensagem": "Hotel does not exist"}
 
+    @jwt_required()
     def post(self):
         self.addargsreq()
         dados = argumentos.parse_args()
@@ -28,7 +29,10 @@ class hotel(Resource):
             return {f"hotel {dados['hotelnome']}": "Salvo"}, 200
         return 400
 
+    @jwt_required()
     def put(self):
+        argumentos.add_argument('hotelid', required= True,help="Nenhum id fornecido")
+        self.addargsreq()
         dados = argumentos.parse_args()
         resposta = DAO.ler_hotel(hotelid=dados['hotelid'])
         if resposta:
@@ -42,6 +46,7 @@ class hotel(Resource):
 
             return {'Message:': "Hotel not found, created"}
 
+    @jwt_required()
     def delete(self):
         dados =argumentos.parse_args()
         if DAO.deletar_hotel(hotelid= dados['hotelid']):
